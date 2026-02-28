@@ -1,10 +1,10 @@
 # NexusQR
 
-NexusQR is a full-stack web application designed for generating customizable vCard 3.0 QR codes. It allows users to input contact details, embed custom logos, preview designs in real-time, and process bulk generation via CSV files.
+NexusQR is a full-stack web application designed for generating highly customizable QR codes. It allows users to generate multiple types of QR codes (vCard, URL, Text, WiFi, Social Media, etc.), embed custom logos, preview designs in real-time, and process bulk generation via CSV files.
 
 ## Features
 
-- **vCard 3.0 Generation**: Encodes standard contact details including name, phone, email, organization, address, and website.
+- **Multi-Type Generation**: Supports different QR types including vCard 3.0, URLs, Plain Text, Email, SMS, WiFi networks, and Social Media profiles (Facebook, Instagram, X, LinkedIn, YouTube).
 - **Real-time Preview**: Instantly updates the QR code visual as users type.
 - **Logo Integration**: Support for overlaying custom PNG/JPG logos at the center of the QR code with automatic scaling and contrast padding.
 - **Visual Customization**: Toggle foreground and background colors to match brand identities.
@@ -76,7 +76,7 @@ NexusQR/
 
 1. **Self-Generation**: Fill in the "Contact Details" form. The preview on the right will update every 500ms.
 2. **Customization**: Use the "Customization" panel to upload a logo or change QR colors.
-3. **Saving**: Click "Save to Account" to store the QR code in your "My QR Codes" dashboard.
+3. **Saving**: Click "Save QR Code" to store the QR code in your "My QR Codes" dashboard.
 4. **Bulk**: Drop a CSV file into the bulk upload zone. Ensure your CSV has a `full_name` column.
 
 ---

@@ -43,7 +43,7 @@ const MyQrCodes = () => {
           My Saved QR Codes
         </h1>
         <p className="text-slate-500 mt-2">
-          Manage and download your previously generated vCard QR codes.
+          Manage and download your previously generated QR codes.
         </p>
       </div>
 

@@ -15,8 +15,9 @@ const Help = () => {
           How to use NexusQR
         </h1>
         <p className="text-lg text-slate-500 max-w-2xl mx-auto">
-          Create, customize, and manage your professional vCard QR codes in
-          seconds. Follow these simple steps to get started.
+          Create, customize, and manage beautiful QR codes for Links, Social
+          Media, vCards, WiFi, and more in seconds. Follow these simple steps to
+          get started.
         </p>
       </div>
 
@@ -32,13 +33,13 @@ const Help = () => {
                 <BookOpen className="w-5 h-5" />
               </div>
               <h3 className="text-xl font-bold text-slate-800">
-                Enter Contact Details
+                Choose Type & Enter Details
               </h3>
             </div>
             <p className="text-slate-600 leading-relaxed">
-              Start by typing your professional information into the left-side
-              form. Fields like Name, Phone, Email, and Organization will be
-              instantly encoded into your vCard QR.
+              Start by picking a QR type from the top selector—URL, Text, WiFi,
+              Social Media, or vCard. Type your information into the form, and
+              the data will instantly be encoded into your QR code.
             </p>
           </div>
         </div>

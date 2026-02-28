@@ -9,17 +9,17 @@ from config import Config
 
 
 def generate_qr(
-    vcard_data: str,
+    data: str,
     fg_color: str = "#000000",
     bg_color: str = "#FFFFFF",
     box_size: int = 10,
     logo_path: str = None,
 ) -> dict:
     """
-    Generate a QR code image from vCard data.
+    Generate a QR code image from encoded data string.
 
     Args:
-        vcard_data: The vCard 3.0 string to encode.
+        data: The encoded string to put in the QR code.
         fg_color: Foreground (QR module) color as hex string.
         bg_color: Background color as hex string.
         box_size: Size of each QR module in pixels (controls resolution).
@@ -31,14 +31,13 @@ def generate_qr(
             - image_path: Path where the image was saved
             - filename: The generated filename
     """
-    # Create QR code instance
     qr = qrcode.QRCode(
-        version=None,  # Auto-determine version
-        error_correction=qrcode.constants.ERROR_CORRECT_H,  # High error correction for logo overlay
+        version=None,
+        error_correction=qrcode.constants.ERROR_CORRECT_H,
         box_size=box_size,
         border=4,
     )
-    qr.add_data(vcard_data)
+    qr.add_data(data)
     qr.make(fit=True)
 
     # Generate the QR image with colors

@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify, send_file
 from werkzeug.utils import secure_filename
 from models import get_db, dict_from_row
+from utils.data_encoder import encode_qr_data
 from utils.vcard import build_vcard
 from utils.qr_generator import generate_qr
 from utils.csv_parser import parse_csv
@@ -13,21 +14,37 @@ import tempfile
 
 qr_bp = Blueprint("qr", __name__, url_prefix="/api/qr")
 
+REQUIRED_FIELDS = {
+    "vcard": "full_name",
+    "url": "url",
+    "text": "text",
+    "email": "email_to",
+    "sms": "phone",
+    "wifi": "ssid",
+    "facebook": "username",
+    "instagram": "username",
+    "twitter": "username",
+    "linkedin": "username",
+    "youtube": "username",
+}
+
 
 @qr_bp.route("/generate", methods=["POST"])
 def generate():
-    """Generate a single vCard QR code from contact details."""
+    """Generate a QR code from data based on the selected type."""
     data = request.form.to_dict() if request.form else request.get_json()
 
     if not data:
         return jsonify({"error": "No data provided"}), 400
 
-    if not data.get("full_name"):
-        return jsonify({"error": "full_name is required"}), 400
+    qr_type = data.get("qr_type", "vcard")
 
-    # Build vCard string
+    required = REQUIRED_FIELDS.get(qr_type)
+    if required and not data.get(required):
+        return jsonify({"error": f"{required} is required for {qr_type} QR codes"}), 400
+
     try:
-        vcard_data = build_vcard(data)
+        qr_content = encode_qr_data(qr_type, data)
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
@@ -42,30 +59,32 @@ def generate():
             logo_path = os.path.join(Config.UPLOAD_FOLDER, logo_filename)
             logo_file.save(logo_path)
 
-    # Generate QR code
     fg_color = data.get("fg_color", "#000000")
     bg_color = data.get("bg_color", "#FFFFFF")
     box_size = int(data.get("resolution", 10))
 
     result = generate_qr(
-        vcard_data=vcard_data,
+        data=qr_content,
         fg_color=fg_color,
         bg_color=bg_color,
         box_size=box_size,
         logo_path=logo_path,
     )
 
-    # Save to database
-    user_id = data.get("user_id")  # Optional, for logged-in users
+    # Derive a display label based on type
+    label = data.get("full_name") or data.get("url") or data.get("ssid") or data.get("username") or data.get("text", "")[:40] or "QR Code"
+
+    user_id = data.get("user_id")
     db = get_db()
     cursor = db.cursor()
     cursor.execute(
-        """INSERT INTO qr_codes (user_id, contact_name, vcard_data, qr_image_path, logo_path, fg_color, bg_color, resolution)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+        """INSERT INTO qr_codes (user_id, contact_name, qr_type, qr_content, qr_image_path, logo_path, fg_color, bg_color, resolution)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (
             user_id,
-            data["full_name"],
-            vcard_data,
+            label,
+            qr_type,
+            qr_content,
             result["image_path"],
             logo_path,
             fg_color,
@@ -79,10 +98,11 @@ def generate():
 
     return jsonify({
         "id": qr_id,
-        "contact_name": data["full_name"],
+        "contact_name": label,
+        "qr_type": qr_type,
         "image_base64": result["image_base64"],
         "filename": result["filename"],
-        "vcard_data": vcard_data,
+        "qr_content": qr_content,
     }), 201
 
 
@@ -96,25 +116,21 @@ def bulk_generate():
     if not csv_file.filename:
         return jsonify({"error": "Empty filename"}), 400
 
-    # Save the CSV temporarily
     os.makedirs(Config.UPLOAD_FOLDER, exist_ok=True)
     csv_filename = secure_filename(csv_file.filename)
     csv_path = os.path.join(Config.UPLOAD_FOLDER, f"bulk_{uuid.uuid4().hex[:8]}_{csv_filename}")
     csv_file.save(csv_path)
 
-    # Parse CSV
     parsed = parse_csv(csv_path)
 
     if parsed["errors"] and not parsed["contacts"]:
         return jsonify({"errors": parsed["errors"]}), 400
 
-    # Get optional customization from form data
     fg_color = request.form.get("fg_color", "#000000")
     bg_color = request.form.get("bg_color", "#FFFFFF")
     box_size = int(request.form.get("resolution", 10))
     user_id = request.form.get("user_id")
 
-    # Save bulk job to DB
     db = get_db()
     cursor = db.cursor()
     cursor.execute(
@@ -124,7 +140,6 @@ def bulk_generate():
     db.commit()
     bulk_job_id = cursor.lastrowid
 
-    # Generate QR codes and build ZIP
     zip_buffer = io.BytesIO()
     generated = []
 
@@ -133,20 +148,18 @@ def bulk_generate():
             try:
                 vcard_data = build_vcard(contact)
                 result = generate_qr(
-                    vcard_data=vcard_data,
+                    data=vcard_data,
                     fg_color=fg_color,
                     bg_color=bg_color,
                     box_size=box_size,
                 )
 
-                # Save to DB
                 cursor.execute(
-                    """INSERT INTO qr_codes (user_id, contact_name, vcard_data, qr_image_path, fg_color, bg_color, resolution)
-                       VALUES (?, ?, ?, ?, ?, ?, ?)""",
-                    (user_id, contact["full_name"], vcard_data, result["image_path"], fg_color, bg_color, box_size),
+                    """INSERT INTO qr_codes (user_id, contact_name, qr_type, qr_content, qr_image_path, fg_color, bg_color, resolution)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                    (user_id, contact["full_name"], "vcard", vcard_data, result["image_path"], fg_color, bg_color, box_size),
                 )
 
-                # Add to ZIP
                 safe_name = contact["full_name"].replace(" ", "_").replace("/", "_")
                 zf.write(result["image_path"], f"{safe_name}.png")
                 generated.append(contact["full_name"])
@@ -154,7 +167,6 @@ def bulk_generate():
             except Exception as e:
                 parsed["errors"].append(f"Error generating QR for {contact.get('full_name', 'unknown')}: {str(e)}")
 
-    # Update bulk job status
     cursor.execute(
         "UPDATE bulk_jobs SET status = ? WHERE id = ?",
         ("completed", bulk_job_id),
@@ -162,7 +174,6 @@ def bulk_generate():
     db.commit()
     db.close()
 
-    # Return the ZIP file
     zip_buffer.seek(0)
     return send_file(
         zip_buffer,
@@ -174,7 +185,7 @@ def bulk_generate():
 
 @qr_bp.route("/history", methods=["GET"])
 def history():
-    """List all previously generated QR codes, optionally filtered by user_id."""
+    """List all previously generated QR codes."""
     user_id = request.args.get("user_id")
     db = get_db()
 
@@ -219,11 +230,9 @@ def delete_qr(qr_id):
 
     qr_data = dict_from_row(row)
 
-    # Delete image file if it exists
     if qr_data.get("qr_image_path") and os.path.exists(qr_data["qr_image_path"]):
         os.remove(qr_data["qr_image_path"])
 
-    # Delete logo file if it exists
     if qr_data.get("logo_path") and os.path.exists(qr_data["logo_path"]):
         os.remove(qr_data["logo_path"])
 
