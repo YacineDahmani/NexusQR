@@ -18,6 +18,15 @@ import {
   Twitter,
   Linkedin,
   Youtube,
+  Ghost,
+  Music,
+  MessageCircle,
+  Calendar,
+  Bitcoin,
+  Upload,
+  Clock,
+  MapPin as MapPinIcon,
+  AlignLeft,
 } from "lucide-react";
 
 const InputField = ({
@@ -105,6 +114,26 @@ const SelectField = ({ label, id, icon: Icon, value, onChange, options }) => (
   </div>
 );
 
+const FileInputField = ({ label, id, icon: Icon, onChange }) => (
+  <div className="flex flex-col gap-1.5 w-full md:col-span-2">
+    <label htmlFor={id} className="input-label">
+      {label}
+    </label>
+    <div className="relative relative-group">
+      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <Icon className="h-4 w-4 text-slate-400 transition-colors" />
+      </div>
+      <input
+        type="file"
+        id={id}
+        name={id}
+        className="input-field pl-10 h-11 file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
+        onChange={onChange}
+      />
+    </div>
+  </div>
+);
+
 const CheckboxField = ({ label, id, checked, onChange }) => (
   <div className="flex items-center gap-3 w-full">
     <input
@@ -159,6 +188,27 @@ const SOCIAL_PLATFORMS = [
     icon: Youtube,
     color: "#FF0000",
     prefix: "youtube.com/@",
+  },
+  {
+    id: "snapchat",
+    label: "Snapchat",
+    icon: Ghost,
+    color: "#FFFC00",
+    prefix: "snapchat.com/add/",
+  },
+  {
+    id: "tiktok",
+    label: "TikTok",
+    icon: Music,
+    color: "#000000",
+    prefix: "tiktok.com/@",
+  },
+  {
+    id: "whatsapp",
+    label: "WhatsApp",
+    icon: MessageCircle,
+    color: "#25D366",
+    prefix: "wa.me/",
   },
 ];
 
@@ -297,6 +347,84 @@ const FORM_CONFIG = {
         ],
       },
       { id: "hidden", label: "Hidden Network", checkbox: true },
+    ],
+  },
+  event: {
+    title: "Calendar Event (.ics)",
+    fields: [
+      {
+        id: "event_title",
+        label: "Event Title",
+        icon: Calendar,
+        placeholder: "Meeting with Client",
+      },
+      {
+        id: "event_location",
+        label: "Location",
+        icon: MapPinIcon,
+        placeholder: "Office or Zoom Link",
+      },
+      {
+        id: "event_start",
+        label: "Start Time",
+        icon: Clock,
+        placeholder: "YYYY-MM-DDTHH:MM",
+        type: "datetime-local",
+      },
+      {
+        id: "event_end",
+        label: "End Time",
+        icon: Clock,
+        placeholder: "YYYY-MM-DDTHH:MM",
+        type: "datetime-local",
+      },
+      {
+        id: "event_description",
+        label: "Description",
+        icon: AlignLeft,
+        placeholder: "Agenda overview...",
+        textarea: true,
+      },
+    ],
+  },
+  crypto: {
+    title: "Crypto Wallet",
+    fields: [
+      {
+        id: "crypto_currency",
+        label: "Currency",
+        icon: Bitcoin,
+        select: true,
+        options: [
+          { value: "bitcoin", label: "Bitcoin (BTC)" },
+          { value: "ethereum", label: "Ethereum (ETH)" },
+          { value: "litecoin", label: "Litecoin (LTC)" },
+        ],
+      },
+      {
+        id: "crypto_address",
+        label: "Wallet Address",
+        icon: Link,
+        placeholder: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+      },
+      {
+        id: "crypto_amount",
+        label: "Payment Amount (Optional)",
+        icon: Type,
+        placeholder: "0.01",
+        type: "number",
+      },
+    ],
+  },
+  pdf: {
+    title: "Upload PDF Menu / Document",
+    fields: [
+      {
+        id: "pdf_file",
+        label: "PDF File",
+        icon: Upload,
+        file: true,
+      },
     ],
   },
 };
@@ -439,6 +567,18 @@ const DataForms = ({
                     },
                   })
                 }
+              />
+            );
+          }
+
+          if (field.file) {
+            return (
+              <FileInputField
+                key={field.id}
+                label={field.label}
+                id={field.id}
+                icon={field.icon}
+                onChange={handleInputChange}
               />
             );
           }

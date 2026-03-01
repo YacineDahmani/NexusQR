@@ -93,43 +93,94 @@ const CustomizationPanel = ({
         </div>
 
         <div className="flex flex-col gap-5">
+          <div className="flex justify-between items-center w-full mb-3">
+            <label className="input-label mb-0">QR Shape</label>
+            <select
+              name="shape"
+              value={formData.shape || "square"}
+              onChange={handleInputChange}
+              className="input-field h-10 w-48 text-sm"
+            >
+              <option value="square">Square (Default)</option>
+              <option value="rounded">Rounded</option>
+              <option value="circle">Circles</option>
+              <option value="gapped">Gapped</option>
+              <option value="vertical">Vertical Bars</option>
+              <option value="horizontal">Horizontal Bars</option>
+            </select>
+          </div>
+
           <div>
-            <label className="input-label flex gap-2">QR Colors</label>
-            <div className="flex gap-4">
-              <div className="flex-1">
-                <span className="text-xs text-slate-500 mb-1 block">
-                  Foreground
-                </span>
-                <div className="flex items-center gap-2 border border-slate-200 rounded-lg p-1.5 bg-white">
-                  <input
-                    type="color"
-                    name="fg_color"
-                    value={formData.fg_color || "#000000"}
-                    onChange={handleInputChange}
-                    className="w-8 h-8 rounded cursor-pointer border-0 bg-transparent p-0"
-                  />
-                  <span className="text-sm font-medium text-slate-700 uppercase">
-                    {formData.fg_color || "#000000"}
-                  </span>
-                </div>
-              </div>
-              <div className="flex-1">
+            <label className="input-label flex gap-2">Colors & Gradients</label>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="flex flex-col">
                 <span className="text-xs text-slate-500 mb-1 block">
                   Background
                 </span>
-                <div className="flex items-center gap-2 border border-slate-200 rounded-lg p-1.5 bg-white">
+                <div className="flex items-center gap-1.5 border border-slate-200 rounded-lg p-1 bg-white">
                   <input
                     type="color"
                     name="bg_color"
                     value={formData.bg_color || "#FFFFFF"}
                     onChange={handleInputChange}
-                    className="w-8 h-8 rounded cursor-pointer border-0 bg-transparent p-0"
+                    className="w-8 h-8 rounded cursor-pointer border-0 bg-transparent p-0 flex-shrink-0"
                   />
-                  <span className="text-sm font-medium text-slate-700 uppercase">
-                    {formData.bg_color || "#FFFFFF"}
+                  <span className="text-xs font-medium text-slate-700 uppercase truncate">
+                    {formData.bg_color || "#FFF"}
                   </span>
                 </div>
               </div>
+              <div className="flex flex-col">
+                <span className="text-xs text-slate-500 mb-1 block">
+                  Foreground
+                </span>
+                <div className="flex items-center gap-1.5 border border-slate-200 rounded-lg p-1 bg-white">
+                  <input
+                    type="color"
+                    name="fg_color"
+                    value={formData.fg_color || "#000000"}
+                    onChange={handleInputChange}
+                    className="w-8 h-8 rounded cursor-pointer border-0 bg-transparent p-0 flex-shrink-0"
+                  />
+                  <span className="text-xs font-medium text-slate-700 uppercase truncate">
+                    {formData.fg_color || "#000"}
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xs text-slate-500 mb-1 block">
+                  Gradient To
+                </span>
+                <div className="flex items-center gap-1.5 border border-slate-200 rounded-lg p-1 bg-white">
+                  <input
+                    type="color"
+                    name="gradient_color"
+                    value={
+                      formData.gradient_color || formData.fg_color || "#000000"
+                    }
+                    onChange={handleInputChange}
+                    className="w-8 h-8 rounded cursor-pointer border-0 bg-transparent p-0 flex-shrink-0"
+                  />
+                  <span className="text-xs font-medium text-slate-700 uppercase truncate">
+                    {formData.gradient_color || formData.fg_color || "#000"}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-3">
+              <select
+                name="gradient_type"
+                value={formData.gradient_type || "none"}
+                onChange={handleInputChange}
+                className="input-field h-10 w-full"
+              >
+                <option value="none">Solid Color (No Gradient)</option>
+                <option value="radial">Radial Gradient</option>
+                <option value="square">Square Gradient</option>
+                <option value="horizontal">Horizontal Gradient</option>
+                <option value="vertical">Vertical Gradient</option>
+              </select>
             </div>
           </div>
 

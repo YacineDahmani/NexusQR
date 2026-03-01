@@ -15,6 +15,9 @@ const SOCIAL_LABELS = {
   twitter: "X (Twitter)",
   linkedin: "LinkedIn",
   youtube: "YouTube",
+  snapchat: "Snapchat",
+  tiktok: "TikTok",
+  whatsapp: "WhatsApp",
 };
 
 const PreviewCard = ({
@@ -140,6 +143,12 @@ const PreviewCard = ({
         return activeContact.username
           ? `@${activeContact.username}`
           : "@username";
+      case "event":
+        return activeContact.event_title || "Calendar Event";
+      case "crypto":
+        return activeContact.crypto_address || "Wallet Address";
+      case "pdf":
+        return "PDF Document";
       default:
         return "QR Code";
     }
@@ -163,6 +172,14 @@ const PreviewCard = ({
         return activeContact.encryption || "WPA/WPA2";
       case "social":
         return SOCIAL_LABELS[socialPlatform] || "Social Media";
+      case "event":
+        return activeContact.event_start
+          ? `Starts: ${activeContact.event_start.replace("T", " ")}`
+          : "Scheduled Event";
+      case "crypto":
+        return `${(activeContact.crypto_currency || "Crypto").toUpperCase()} Payment`;
+      case "pdf":
+        return "Scan to View File";
       default:
         return "QR Code";
     }

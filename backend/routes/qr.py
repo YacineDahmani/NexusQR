@@ -26,6 +26,12 @@ REQUIRED_FIELDS = {
     "twitter": "username",
     "linkedin": "username",
     "youtube": "username",
+    "snapchat": "username",
+    "tiktok": "username",
+    "whatsapp": "username",
+    "event": "event_title",
+    "crypto": "crypto_address",
+    "pdf": None, # Handle PDF manually
 }
 
 
@@ -40,8 +46,24 @@ def generate():
     qr_type = data.get("qr_type", "vcard")
 
     required = REQUIRED_FIELDS.get(qr_type)
-    if required and not data.get(required):
+    if required and qr_type != "pdf" and not data.get(required):
         return jsonify({"error": f"{required} is required for {qr_type} QR codes"}), 400
+
+    if qr_type == "pdf":
+        if "pdf_file" not in request.files:
+            return jsonify({"error": "pdf_file is required for PDF QR codes"}), 400
+        pdf_file = request.files["pdf_file"]
+        if pdf_file.filename:
+            os.makedirs(Config.UPLOAD_FOLDER, exist_ok=True)
+            ext = pdf_file.filename.rsplit(".", 1)[-1].lower()
+            pdf_filename = f"pdf_{uuid.uuid4().hex[:8]}.{ext}"
+            pdf_path = os.path.join(Config.UPLOAD_FOLDER, pdf_filename)
+            pdf_file.save(pdf_path)
+            # URL to access the PDF (assuming frontend knows where the server is, or we return relative)
+            server_url = request.host_url.rstrip('/')
+            # Normally we serve this via a route. Let's just create a generic static URL for now.
+            pdf_url = f"{server_url}/static/uploads/{pdf_filename}" # We'll assume the Flask app can serve standard uploads mapping.
+            data["pdf_url"] = pdf_url
 
     try:
         qr_content = encode_qr_data(qr_type, data)
@@ -62,6 +84,9 @@ def generate():
     fg_color = data.get("fg_color", "#000000")
     bg_color = data.get("bg_color", "#FFFFFF")
     box_size = int(data.get("resolution", 10))
+    shape = data.get("shape", "square")
+    gradient_type = data.get("gradient_type", "none")
+    gradient_color = data.get("gradient_color", "#000000")
 
     result = generate_qr(
         data=qr_content,
@@ -69,6 +94,9 @@ def generate():
         bg_color=bg_color,
         box_size=box_size,
         logo_path=logo_path,
+        shape=shape,
+        gradient_type=gradient_type,
+        gradient_color=gradient_color,
     )
 
     # Derive a display label based on type

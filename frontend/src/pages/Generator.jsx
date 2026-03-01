@@ -13,6 +13,9 @@ const REQUIRED_FIELDS = {
   sms: "phone",
   wifi: "ssid",
   social: "username",
+  event: "event_start",
+  crypto: "crypto_address",
+  pdf: "pdf_file",
 };
 
 const TYPE_LABELS = {
@@ -23,6 +26,9 @@ const TYPE_LABELS = {
   sms: "SMS",
   wifi: "WiFi",
   social: "Social Media",
+  event: "Event",
+  crypto: "Crypto",
+  pdf: "PDF",
 };
 
 const Generator = () => {
@@ -59,8 +65,12 @@ const Generator = () => {
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, files } = e.target;
+    if (type === "file") {
+      setFormData((prev) => ({ ...prev, [name]: files[0] }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   useEffect(() => {

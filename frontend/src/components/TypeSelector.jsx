@@ -7,6 +7,9 @@ import {
   MessageSquare,
   Wifi,
   Share2,
+  Calendar,
+  Bitcoin,
+  FileText,
 } from "lucide-react";
 
 const QR_TYPES = [
@@ -72,6 +75,33 @@ const QR_TYPES = [
     bg: "bg-pink-50",
     border: "border-pink-200",
     activeBg: "bg-pink-100",
+  },
+  {
+    id: "event",
+    label: "Event",
+    icon: Calendar,
+    color: "text-orange-600",
+    bg: "bg-orange-50",
+    border: "border-orange-200",
+    activeBg: "bg-orange-100",
+  },
+  {
+    id: "crypto",
+    label: "Crypto",
+    icon: Bitcoin,
+    color: "text-yellow-600",
+    bg: "bg-yellow-50",
+    border: "border-yellow-200",
+    activeBg: "bg-yellow-100",
+  },
+  {
+    id: "pdf",
+    label: "PDF",
+    icon: FileText,
+    color: "text-red-600",
+    bg: "bg-red-50",
+    border: "border-red-200",
+    activeBg: "bg-red-100",
   },
 ];
 
