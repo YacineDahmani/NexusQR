@@ -42,6 +42,11 @@ const Generator = () => {
 
   const [logoFile, setLogoFile] = useState(null);
   const [csvFile, setCsvFile] = useState(null);
+  const [frameConfig, setFrameConfig] = useState({
+    style: "none",
+    ctaText: "Scan Me",
+    color: "#1e293b",
+  });
 
   const [qrData, setQrData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -139,6 +144,8 @@ const Generator = () => {
             setLogoFile={setLogoFile}
             csvFile={csvFile}
             setCsvFile={setCsvFile}
+            frameConfig={frameConfig}
+            onFrameChange={setFrameConfig}
           />
         </div>
 
@@ -154,6 +161,7 @@ const Generator = () => {
             activeContact={formData}
             qrType={qrType}
             socialPlatform={socialPlatform}
+            frameConfig={frameConfig}
           />
         </div>
       </div>

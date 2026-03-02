@@ -6,6 +6,7 @@ import {
   FileText,
   CheckCircle2,
 } from "lucide-react";
+import FrameSelector from "./FrameSelector";
 
 const CustomizationPanel = ({
   formData,
@@ -14,6 +15,8 @@ const CustomizationPanel = ({
   setLogoFile,
   csvFile,
   setCsvFile,
+  frameConfig,
+  onFrameChange,
 }) => {
   const onLogoDrop = useCallback(
     (acceptedFiles) => {
@@ -203,6 +206,8 @@ const CustomizationPanel = ({
           </div>
         </div>
       </div>
+
+      <FrameSelector frame={frameConfig} onFrameChange={onFrameChange} />
 
       <div className="mt-8 border-t border-slate-100 pt-6">
         <label className="input-label mb-2">Bulk Generation (CSV)</label>
