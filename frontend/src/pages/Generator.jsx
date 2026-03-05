@@ -35,7 +35,7 @@ const Generator = () => {
   const [qrType, setQrType] = useState("vcard");
   const [socialPlatform, setSocialPlatform] = useState("facebook");
   const [formData, setFormData] = useState({
-    fg_color: "#007BFF",
+    fg_color: "#000000",
     bg_color: "#FFFFFF",
     resolution: 10,
   });
