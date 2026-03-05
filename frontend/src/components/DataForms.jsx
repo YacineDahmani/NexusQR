@@ -127,7 +127,7 @@ const FileInputField = ({ label, id, icon: Icon, onChange }) => (
         type="file"
         id={id}
         name={id}
-        className="input-field pl-10 h-11 file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
+        className="input-field pl-10 h-11 file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary-50 dark:file:bg-primary-500/10 file:text-primary-700 dark:file:text-primary-400 hover:file:bg-primary-100 dark:hover:file:bg-primary-500/20"
         onChange={onChange}
       />
     </div>
@@ -454,8 +454,8 @@ const SocialMediaForm = ({
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 transition-all duration-200 cursor-pointer text-sm font-semibold
                 ${
                   isActive
-                    ? "border-slate-300 bg-white shadow-sm"
-                    : "border-transparent bg-slate-50 hover:bg-slate-100 text-slate-500"
+                    ? "border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700/50 shadow-sm"
+                    : "border-transparent bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-700/50 text-slate-500 dark:text-slate-400"
                 }`}
             >
               <Icon
@@ -463,7 +463,9 @@ const SocialMediaForm = ({
                 style={{ color: isActive ? p.color : undefined }}
                 strokeWidth={2}
               />
-              <span className={isActive ? "text-slate-800" : ""}>
+              <span
+                className={isActive ? "text-slate-800 dark:text-white" : ""}
+              >
                 {p.label}
               </span>
             </button>
@@ -477,7 +479,7 @@ const SocialMediaForm = ({
             {platform.label} Username
           </label>
           <div className="relative relative-group flex">
-            <span className="inline-flex items-center px-3 bg-slate-100 border border-r-0 border-slate-200 rounded-l-lg text-sm text-slate-500 font-medium whitespace-nowrap">
+            <span className="inline-flex items-center px-3 bg-slate-100 dark:bg-slate-800/50 border border-r-0 border-slate-200 dark:border-slate-700/50 rounded-l-lg text-sm text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap">
               {platform.prefix}
             </span>
             <input

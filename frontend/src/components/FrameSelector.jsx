@@ -57,13 +57,8 @@ const FrameSelector = ({ frame, onFrameChange }) => {
   const isActive = frame.style !== "none";
 
   return (
-    <div className="mt-6 border-t border-slate-100 pt-6">
-      <label className="input-label mb-3 flex items-center gap-2">
-        <Frame className="w-4 h-4 text-primary-500" />
-        QR Frame & CTA
-      </label>
-
-      <div className="flex gap-2 flex-wrap mb-4">
+    <div className="flex flex-col h-full">
+      <div className="flex flex-wrap gap-2 mb-4">
         {FRAME_PRESETS.map((preset) => {
           const isSelected = frame.style === preset.id;
           return (
@@ -73,8 +68,8 @@ const FrameSelector = ({ frame, onFrameChange }) => {
               className={`px-3.5 py-2 rounded-xl border-2 text-xs font-semibold transition-all duration-200 cursor-pointer
                 ${
                   isSelected
-                    ? "border-primary-500 bg-primary-50 text-primary-700 shadow-sm"
-                    : "border-slate-100 bg-slate-50 text-slate-500 hover:bg-slate-100 hover:border-slate-200"
+                    ? "border-primary-500 dark:border-primary-400 bg-primary-50 dark:bg-primary-500/10 text-primary-700 dark:text-primary-300 shadow-sm"
+                    : "border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:border-slate-200 dark:hover:border-slate-600"
                 }`}
             >
               {preset.label}
@@ -84,9 +79,9 @@ const FrameSelector = ({ frame, onFrameChange }) => {
       </div>
 
       {isActive && (
-        <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+        <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300 mt-auto">
           <div>
-            <span className="text-xs font-semibold text-slate-500 mb-2 block">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 block">
               CTA Text
             </span>
             <div className="flex gap-1.5 flex-wrap mb-2">
@@ -97,8 +92,8 @@ const FrameSelector = ({ frame, onFrameChange }) => {
                   className={`px-2.5 py-1.5 rounded-lg text-[11px] font-semibold transition-all cursor-pointer
                     ${
                       frame.ctaText === text && !customCta
-                        ? "bg-primary-600 text-white shadow-sm"
-                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                        ? "bg-primary-600 dark:bg-primary-500 text-white shadow-sm"
+                        : "bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
                     }`}
                 >
                   {text}
@@ -107,7 +102,7 @@ const FrameSelector = ({ frame, onFrameChange }) => {
             </div>
             <div className="relative mt-2">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Pencil className="h-3.5 w-3.5 text-slate-400" />
+                <Pencil className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
               </div>
               <input
                 type="text"
@@ -115,13 +110,13 @@ const FrameSelector = ({ frame, onFrameChange }) => {
                 value={customCta}
                 onChange={handleCustomCtaChange}
                 maxLength={30}
-                className="input-field pl-9 h-9 text-xs"
+                className="input-field pl-9 h-9 text-xs dark:bg-slate-800 dark:border-slate-600"
               />
             </div>
           </div>
 
           <div>
-            <span className="text-xs font-semibold text-slate-500 mb-2 block">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 block">
               Frame Color
             </span>
             <div className="flex gap-2">
@@ -132,8 +127,8 @@ const FrameSelector = ({ frame, onFrameChange }) => {
                   title={c.label}
                   className={`w-7 h-7 rounded-full border-2 transition-all cursor-pointer hover:scale-110 ${
                     frame.color === c.value
-                      ? "border-primary-500 ring-2 ring-primary-200 scale-110"
-                      : "border-slate-200"
+                      ? "border-primary-500 dark:border-primary-400 ring-2 ring-primary-200 dark:ring-primary-900 scale-110"
+                      : "border-slate-200 dark:border-slate-600"
                   }`}
                   style={{ backgroundColor: c.value }}
                 />

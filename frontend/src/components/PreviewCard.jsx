@@ -449,7 +449,7 @@ const PreviewCard = ({
 
   return (
     <div className="panel-card p-6 md:p-8 flex flex-col items-center sticky top-24">
-      <h3 className="font-bold text-slate-800 text-lg mb-6 self-start md:self-center">
+      <h3 className="font-bold text-slate-800 dark:text-white text-lg mb-6 self-start md:self-center">
         Live QR Code Preview
       </h3>
 
@@ -457,13 +457,13 @@ const PreviewCard = ({
         ref={framedRef}
         className={`relative w-full max-w-[320px] flex items-center justify-center mb-6 group transition-all duration-500 ${
           !hasFrame
-            ? "aspect-square bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md"
+            ? "aspect-square bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700/50 shadow-sm hover:shadow-md dark:shadow-none"
             : ""
         }`}
       >
         {isLoading && (
-          <div className="absolute inset-0 z-10 bg-white/60 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-            <Loader2 className="w-8 h-8 text-primary-600 animate-spin" />
+          <div className="absolute inset-0 z-10 bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+            <Loader2 className="w-8 h-8 text-primary-600 dark:text-primary-400 animate-spin" />
           </div>
         )}
 
@@ -477,7 +477,7 @@ const PreviewCard = ({
             />
           </FramedQR>
         ) : (
-          <div className="flex flex-col items-center gap-3 text-slate-400 py-20">
+          <div className="flex flex-col items-center gap-3 text-slate-400 dark:text-slate-500 py-20">
             <QrCode className="w-16 h-16 opacity-50" strokeWidth={1} />
             <span className="text-sm font-medium">
               Enter details to generate
@@ -487,10 +487,10 @@ const PreviewCard = ({
       </div>
 
       <div className="text-center w-full mb-8">
-        <h2 className="text-xl font-bold text-slate-800 truncate">
+        <h2 className="text-xl font-bold text-slate-800 dark:text-white truncate">
           {getDisplayTitle()}
         </h2>
-        <p className="text-slate-500 font-medium truncate mt-1">
+        <p className="text-slate-500 dark:text-slate-400 font-medium truncate mt-1">
           {getDisplaySubtitle()}
         </p>
       </div>
@@ -512,9 +512,9 @@ const PreviewCard = ({
             className="btn-secondary py-2.5 text-sm"
           >
             {isCopied ? (
-              <Check className="w-4 h-4 text-green-500" />
+              <Check className="w-4 h-4 text-green-500 dark:text-green-400" />
             ) : (
-              <Copy className="w-4 h-4 text-slate-400" />
+              <Copy className="w-4 h-4 text-slate-400 dark:text-slate-500" />
             )}
             {isCopied ? "Copied!" : "Copy Data"}
           </button>
@@ -523,7 +523,7 @@ const PreviewCard = ({
             disabled={!hasData || isLoading}
             className="btn-secondary py-2.5 text-sm"
           >
-            <Share2 className="w-4 h-4 text-slate-400" />
+            <Share2 className="w-4 h-4 text-slate-400 dark:text-slate-500" />
             Share
           </button>
         </div>
@@ -533,14 +533,14 @@ const PreviewCard = ({
           disabled={!hasData || isLoading}
           className={`btn-secondary w-full py-2.5 text-sm mt-1 transition-colors ${
             isSaved
-              ? "bg-amber-50 border-amber-200 text-amber-700 hover:bg-amber-100 hover:border-amber-300 shadow-inner"
-              : "border-slate-200/60 bg-slate-50 hover:bg-slate-100"
+              ? "bg-amber-50 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/30 text-amber-700 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-500/20 hover:border-amber-300 dark:hover:border-amber-500/50 shadow-inner"
+              : "border-slate-200/60 dark:border-slate-700/60 bg-slate-50 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/60"
           }`}
         >
           {isSaved ? (
-            <Bookmark className="w-4 h-4 fill-amber-500 text-amber-500" />
+            <Bookmark className="w-4 h-4 fill-amber-500 dark:fill-amber-400 text-amber-500 dark:text-amber-400" />
           ) : (
-            <Bookmark className="w-4 h-4 text-slate-400" />
+            <Bookmark className="w-4 h-4 text-slate-400 dark:text-slate-500" />
           )}
           {isSaved ? "Saved to Account" : "Save QR Code"}
         </button>

@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@variant dark (&:where(.dark, .dark *));
 @theme {
   --font-sans: "Plus Jakarta Sans", Inter, sans-serif;
 
@@ -26,6 +26,9 @@
     -webkit-font-smoothing: antialiased;
     color: #1e293b;
     background-color: #f8fafc;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
 
     /* Mesh gradient layer */
     background-image:
@@ -37,36 +40,46 @@
     background-attachment: fixed;
     min-height: 100vh;
   }
+
+  body.dark {
+    color: #f8fafc;
+    background-color: #0f172a;
+    background-image:
+      radial-gradient(at 0% 0%, hsla(253, 60%, 40%, 0.05) 0, transparent 50%),
+      radial-gradient(at 50% 0%, hsla(225, 60%, 40%, 0.05) 0, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(339, 60%, 40%, 0.05) 0, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2394a3b8' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 0h4v4H0V0zm10 20h4v4h-4v-4zm10-10h4v4h-4v-4zm10 20h4v4h-4v-4z'/%3E%3Cpath d='M20 38h2v2h-2v-2zm-2 0h-2v2h2v-2zm4 0h2v2h-2v-2zm-2-2h2v-2h-2v2zm0 4h2v2h-2v-2z' opacity='0.5'/%3E%3Cpath d='M4 38h2v2H4v-2zm-2 0H0v2h2v-2zm4 0h2v2H6v-2zm-2-2h2v-2H4v2zm0 4h2v2H4v-2z' opacity='0.3'/%3E%3C/g%3E%3C/svg%3E");
+  }
 }
 
 @layer components {
   /* Form Inputs */
   .input-field {
-    @apply w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all duration-200 text-slate-700 placeholder:text-slate-400 shadow-sm shadow-slate-100/50;
+    @apply w-full border border-slate-200 dark:border-slate-700/50 rounded-lg px-4 py-2.5 text-sm bg-white dark:bg-slate-800/50 focus:outline-none focus:ring-4 focus:ring-primary-500/10 dark:focus:ring-primary-500/20 focus:border-primary-500 dark:focus:border-primary-500 transition-all duration-200 text-slate-700 dark:text-slate-300 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-sm shadow-slate-100/50 dark:shadow-none;
   }
 
   /* Form Labels */
   .input-label {
-    @apply block text-sm font-semibold text-slate-700 mb-1.5;
+    @apply block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5;
   }
 
   /* Buttons */
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg px-5 py-2.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary-500/25 active:translate-y-0 active:shadow-md;
+    @apply bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white font-medium rounded-lg px-5 py-2.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary-500/25 dark:hover:shadow-primary-500/20 active:translate-y-0 active:shadow-md;
   }
 
   .btn-secondary {
-    @apply bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg px-5 py-2.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-sm hover:shadow active:translate-y-0 active:shadow-sm hover:-translate-y-0.5;
+    @apply bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-700 dark:text-slate-300 font-medium rounded-lg px-5 py-2.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-sm dark:shadow-none hover:shadow dark:hover:shadow-none active:translate-y-0 hover:-translate-y-0.5;
   }
 
   /* Cards */
   .panel-card {
-    @apply bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-shadow duration-500 border border-slate-100 overflow-hidden;
+    @apply bg-white dark:bg-slate-800/50 rounded-2xl shadow-card dark:shadow-none hover:shadow-card-hover dark:hover:shadow-none transition-shadow duration-500 border border-slate-100 dark:border-slate-700/50 overflow-hidden;
   }
 
   /* Section Title */
   .section-title {
-    @apply text-lg font-bold text-slate-800 mb-4 flex items-center gap-2;
+    @apply text-lg font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2;
   }
 }
 
@@ -84,4 +97,11 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
 }

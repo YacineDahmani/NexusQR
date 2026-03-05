@@ -117,23 +117,23 @@ const TypeSelector = ({ activeType, onTypeChange }) => {
             <button
               key={type.id}
               onClick={() => onTypeChange(type.id)}
-              className={`flex flex-col items-center gap-1.5 min-w-[72px] px-3 py-3 rounded-xl border-2 transition-all duration-300 cursor-pointer shrink-0
+              className={`group flex flex-col items-center gap-1.5 min-w-[72px] px-3 py-3 rounded-xl border-2 transition-all duration-300 cursor-pointer shrink-0
                 ${
                   isActive
-                    ? `${type.activeBg} ${type.border} shadow-inner scale-[0.98]`
-                    : `bg-white border-slate-100 hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1 hover:shadow-sm`
+                    ? `${type.activeBg} dark:bg-opacity-20 ${type.border} dark:border-opacity-40 shadow-inner scale-[0.98]`
+                    : `bg-white dark:bg-slate-800/80 border-slate-100 dark:border-slate-700/50 hover:border-slate-300 dark:hover:border-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 hover:-translate-y-1 hover:shadow-sm`
                 }`}
             >
               <div
-                className={`p-1.5 rounded-lg transition-colors ${isActive ? type.bg : "bg-slate-50"}`}
+                className={`p-1.5 rounded-lg transition-colors ${isActive ? type.bg + " dark:bg-opacity-20" : "bg-slate-50 dark:bg-slate-800 dark:group-hover:bg-slate-600"}`}
               >
                 <Icon
-                  className={`w-4.5 h-4.5 ${isActive ? type.color : "text-slate-400"}`}
+                  className={`w-4.5 h-4.5 transition-colors ${isActive ? type.color : "text-slate-400 dark:text-slate-400 dark:group-hover:text-white"}`}
                   strokeWidth={2}
                 />
               </div>
               <span
-                className={`text-[11px] font-semibold leading-tight ${isActive ? "text-slate-800" : "text-slate-500"}`}
+                className={`text-[11px] font-semibold leading-tight transition-colors ${isActive ? "text-slate-800 dark:text-white" : "text-slate-500 dark:text-slate-400 dark:group-hover:text-white"}`}
               >
                 {type.label}
               </span>

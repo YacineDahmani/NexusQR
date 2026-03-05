@@ -122,28 +122,28 @@ const Generator = () => {
   return (
     <div className="min-h-screen pb-20">
       {/* Premium Hero Section */}
-      <div className="relative overflow-hidden bg-white border-b border-slate-200 mb-8 md:mb-12">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiM5NGEzYjgiIGZpbGwtb3BhY2l0eT0iMC4xNSIvPjwvc3ZnPg==')] [mask-image:linear-gradient(to_bottom,white,transparent)]" />
-        <div className="absolute top-0 left-0 -ml-40 -mt-40 w-96 h-96 rounded-full bg-primary-100/50 blur-3xl opacity-50 mix-blend-multiply" />
+      <div className="relative overflow-hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 mb-8 md:mb-12 transition-colors duration-300">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiM5NGEzYjgiIGZpbGwtb3BhY2l0eT0iMC4xNSIvPjwvc3ZnPg==')] [mask-image:linear-gradient(to_bottom,white,transparent)] dark:opacity-20" />
+        <div className="absolute top-0 left-0 -ml-40 -mt-40 w-96 h-96 rounded-full bg-primary-100/50 dark:bg-primary-900/20 blur-3xl opacity-50 mix-blend-multiply dark:mix-blend-screen" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-50 text-primary-700 font-semibold text-sm mb-4 border border-primary-100 shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-50 dark:bg-primary-500/10 text-primary-700 dark:text-primary-400 font-semibold text-sm mb-4 border border-primary-100 dark:border-primary-500/20 shadow-sm dark:shadow-none">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 dark:bg-primary-500 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
                 </span>
                 Live Editor
               </div>
-              <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight mb-4">
+              <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-white tracking-tight mb-4 transition-colors">
                 Generate{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-600">
                   {TYPE_LABELS[qrType]}
                 </span>{" "}
                 QR
               </h1>
-              <p className="text-lg text-slate-500 max-w-xl">
+              <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl transition-colors">
                 Enter your details, customize the design, and watch your QR code
                 update instantly.
               </p>
@@ -177,7 +177,7 @@ const Generator = () => {
 
           <div className="lg:col-span-5 relative">
             {error && (
-              <div className="mb-4 p-4 bg-red-50 text-red-600 rounded-lg text-sm font-medium border border-red-100">
+              <div className="mb-4 p-4 bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 rounded-lg text-sm font-medium border border-red-100 dark:border-red-500/20">
                 {error}
               </div>
             )}
