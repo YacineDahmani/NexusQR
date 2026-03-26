@@ -151,6 +151,20 @@ const Help = () => {
             </div>
           </div>
         </div>
+
+        <div className="mt-10 text-center">
+          <p className="text-sm text-slate-500 dark:text-slate-400 transition-colors">
+            Credit: {" "}
+            <a
+              href="https://github.com/YacineDahmani"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-primary-600 dark:text-primary-400 hover:underline"
+            >
+              Yacine Dahmani
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );
