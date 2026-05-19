@@ -2,18 +2,6 @@
 
 NexusQR is a full-stack web application designed for generating highly customizable QR codes. It allows users to generate multiple types of QR codes (vCard, URL, Text, WiFi, Social Media, etc.), embed custom logos, preview designs in real-time, and process bulk generation via CSV files.
 
-## Features
-
-- **Multi-Type Generation**: Supports different QR types including vCard 3.0, URLs, Plain Text, Email, SMS, WiFi networks, and Social Media profiles (Facebook, Instagram, X, LinkedIn, YouTube).
-- **Real-time Preview**: Instantly updates the QR code visual as users type.
-- **Logo Integration**: Support for overlaying custom PNG/JPG logos at the center of the QR code with automatic scaling and contrast padding.
-- **Visual Customization**: Toggle foreground and background colors to match brand identities.
-- **Bulk Processing**: Upload CSV files to generate batches of QR codes simultaneously, exportable as a ZIP archive.
-- **Local Storage Management**: Save generated QR codes to a personal dashboard stored in the browser.
-- **Responsive Design**: Specialized two-column layout for desktop that collapses into an accessible stack for mobile users.
-
-## Tech Stack
-
 ### Frontend
 
 - **React (Vite)**: Modern component-based architecture.
