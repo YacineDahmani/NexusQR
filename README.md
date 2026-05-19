@@ -2,6 +2,8 @@
 
 NexusQR is a full-stack web application designed for generating highly customizable QR codes. It allows users to generate multiple types of QR codes (vCard, URL, Text, WiFi, Social Media, etc.), embed custom logos, preview designs in real-time, and process bulk generation via CSV files.
 
+# Techstack
+
 ### Frontend
 
 - **React (Vite)**: Modern component-based architecture.
