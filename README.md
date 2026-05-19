@@ -79,6 +79,3 @@ NexusQR/
 3. **Saving**: Click "Save QR Code" to store the QR code in your "My QR Codes" dashboard.
 4. **Bulk**: Drop a CSV file into the bulk upload zone. Ensure your CSV has a `full_name` column.
 
----
-
-_Note: This project is currently in in Progress._
